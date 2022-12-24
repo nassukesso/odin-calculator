@@ -1,0 +1,46 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
+  background-color: lightsteelblue;
+}
+
+.display {
+  text-align: right;
+  padding: 5px;
+  margin: 10px 5px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.buttons {
+  margin: 10px 5px;
+}
+
+button {
+  padding: 4px 10px;
+  border: 1px solid black;
+  background-color: coral;
+  font-size: 18px;
+}
+
+button:hover {
+  background-color: aquamarine;
+}
+
+.digits button {
+  min-width: 40px;
+}
+
+.operators button {
+  min-width: 40px;
+}
+
+.digits {
+  margin-bottom: 10px;
+}
+
+.operators, .digits {
+  display: grid;
+  grid: repeat(2, auto) / auto-flow auto;
+  gap: 2px;
+}
