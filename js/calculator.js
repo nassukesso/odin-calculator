@@ -1,21 +1,36 @@
-const add = function (a, b) {
+const digitButtons = document.querySelectorAll(".digits button");
+const display = document.querySelector(".display");
+let displayValue = 0;
+let currentOperator;
+
+function displayDigit(digit) {
+  display.innerText = digit;
+  displayValue = digit;
+}
+
+for (let digitButton of digitButtons) {
+  let digit = digitButton.innerText;
+  digitButton.addEventListener("click", () => displayDigit(digit));
+}
+
+function add(a, b) {
   return a + b;
 }
 
-const subtract = function (a, b) {
+function subtract(a, b) {
   return a - b;
-};
+}
 
-const multiply = function (a, b) {
+function multiply(a, b) {
   return a * b;
 }
 
-const divide = function (a, b) {
+function divide(a, b) {
   console.log((a / b).toFixed(2));
   return (a / b).toFixed(2);
 }
 
-const operate = function (operator, a, b) {
+function operate(operator, a, b) {
   switch (operator) {
     case "+":
       return add(a, b);
@@ -26,6 +41,6 @@ const operate = function (operator, a, b) {
     case "/":
       return divide(a, b);
     default:
-      return "unknown operator"
+      return "unknown operator";
   }
 }
