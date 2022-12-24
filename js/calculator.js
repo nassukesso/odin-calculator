@@ -4,11 +4,11 @@ const operatorBtns = document.querySelectorAll(".operator");
 const equalsBtn = document.querySelector("#equals");
 const clearBtn = document.querySelector("#clear");
 let previousDisplayValue = 0;
-let currentOperator;
+let currentOperator = "=";
 let newInput = true;
 
 function display(digit) {
-    displayField.innerText = digit;
+  displayField.innerText = digit;
 }
 
 function displayNumber(digit) {
@@ -21,15 +21,15 @@ function displayNumber(digit) {
 }
 
 function add(a, b) {
-  return +a + +b;
+  return Math.trunc((+a + +b) * 100) / 100;
 }
 
 function subtract(a, b) {
-  return +a - +b;
+  return Math.trunc((+a - +b) * 100) / 100;
 }
 
 function multiply(a, b) {
-  return +a * +b;
+  return Math.trunc(+a * +b * 100) / 100;
 }
 
 function divide(a, b) {
@@ -53,17 +53,32 @@ function operate(operator, a, b) {
   }
 }
 
-function cache(operator) {
-  currentOperator = operator;
-  previousDisplayValue = displayField.innerText;
-  newInput = true;
+function resetCalc() {
+  currentOperator = "=";
+  previousDisplayValue = 0;
+  displayField.innerText = "0";
 }
 
 function displayResult(operator, a, b) {
   let result = operate(operator, a, b);
-  display(result);
-  currentOperator = "=";
+  if (result === Infinity) {
+    displayField.innerText = "Try again!";
+    setTimeout(() => {
+      resetCalc();
+    }, 1000);
+  } else {
+    display(result);
+  }
   newInput = true;
+}
+
+function execute(operator) {
+  if (newInput === false) {
+    displayResult(currentOperator,
+      previousDisplayValue, displayField.innerText);
+    previousDisplayValue = displayField.innerText;
+    newInput = true;
+  }
 }
 
 for (let digitBtn of digitBtns) {
@@ -73,9 +88,16 @@ for (let digitBtn of digitBtns) {
 
 for (let operatorBtn of operatorBtns) {
   let operator = operatorBtn.innerText;
-  operatorBtn.addEventListener("click", () => cache(operator));
+  operatorBtn.addEventListener("click", () => {
+    execute(operator);
+    currentOperator = operator;
+  });
 }
 
-equalsBtn.addEventListener("click", () =>
-  displayResult(currentOperator, previousDisplayValue, displayField.innerText)
-);
+equalsBtn.addEventListener("click", () => {
+  displayResult(currentOperator,
+    previousDisplayValue, displayField.innerText);
+  currentOperator = "=";
+});
+
+clearBtn.addEventListener("click", () => resetCalc());
