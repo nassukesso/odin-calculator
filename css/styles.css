@@ -39,7 +39,7 @@ button:hover {
   margin-bottom: 10px;
 }
 
-.operators, .digits {
+.functionals, .digits {
   display: grid;
   grid: repeat(2, auto) / auto-flow auto;
   gap: 2px;
